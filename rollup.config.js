@@ -3,6 +3,7 @@ import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
+const production = !process.env.ROLLUP_WATCH;
 
 export default {
     input: 'src/main.js', // Path to your main JavaScript file
@@ -17,8 +18,9 @@ export default {
             contentBase: 'public',
             host: 'localhost',
             port: 5000,
+            
         }),
-        livereload({ watch: 'public' }),
+        !production && livereload({ watch: 'public' }),
         nodeResolve({
             exportConditions: ['svelte']
         }),
